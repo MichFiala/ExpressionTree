@@ -13,7 +13,7 @@ namespace Application
 			_container = container;
 
 		}
-		public IExpressionNodeSolver GetExpressionSolver(IExpressionNode node)
+		private IExpressionNodeSolver GetExpressionSolver(IExpressionNode node)
 		{
 			var type = node.GetType();
 
@@ -21,6 +21,8 @@ namespace Application
 				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<BinomialExpression>>();
 			if (type == typeof(VariableExpression))
 				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<VariableExpression>>();
+			if (type == typeof(ConstantExpression))
+				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<ConstantExpression>>();
 
 			throw new InvalidDataException($"Cannot find solver for type {node.GetType()}");
 		}

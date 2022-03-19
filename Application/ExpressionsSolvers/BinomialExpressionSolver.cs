@@ -16,8 +16,8 @@ namespace Application.ExpressionsSolvers
 			var node = (BinomialExpression)binomialNode;
 			result = 0;
 
-			var leftSideCouldBeSolved = _solverFactory.GetExpressionSolver(node.LeftSide).TrySolve(node.LeftSide, out decimal leftSideResult);
-			var rightSideCouldBeSolved = _solverFactory.GetExpressionSolver(node.LeftSide).TrySolve(node.RightSide, out decimal rightSideResult);
+			var leftSideCouldBeSolved = _solverFactory.TrySolve(node.LeftSide, out decimal leftSideResult);
+			var rightSideCouldBeSolved = _solverFactory.TrySolve(node.RightSide, out decimal rightSideResult);
 
 			if (!leftSideCouldBeSolved || !rightSideCouldBeSolved) return false;
 
@@ -26,6 +26,15 @@ namespace Application.ExpressionsSolvers
 				case BinomialOperatorEnum.Plus:
 					result = leftSideResult + rightSideResult;
 					return true;
+				case BinomialOperatorEnum.Multiplication:
+					result = leftSideResult * rightSideResult;
+					return true;			
+				case BinomialOperatorEnum.Minus:
+					result = leftSideResult - rightSideResult;
+					return true;			
+				case BinomialOperatorEnum.Division:
+					result = leftSideResult / rightSideResult;
+					return true;						
 				default:
 					throw new NotImplementedException($"Not implemented solving method for operator {node.Operator}");
 			}

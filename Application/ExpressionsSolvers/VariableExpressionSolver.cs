@@ -17,7 +17,7 @@ namespace Application.ExpressionsSolvers
 
 			if (node.Expression is null) return false;
 
-			return _solverFactory.GetExpressionSolver(expressionNode).TrySolve(node.Expression, out result);
+			return _solverFactory.TrySolve(node.Expression, out result);
 		}
 	}
 }

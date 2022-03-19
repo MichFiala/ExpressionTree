@@ -19,15 +19,29 @@ container.Register(
 	.LifestyleTransient());
 
 container.Register(
+	Component.For<IExpressionNodeSolverForMarker<ConstantExpression>>()
+	.ImplementedBy<ConstantExpressionSolver>()
+	.LifestyleTransient());
+
+container.Register(
 	Component.For<ExpressionNodeSolverFactory>()
 	.Instance(new ExpressionNodeSolverFactory(container))
 	.LifestyleSingleton());
 var solverFactory = container.Resolve<ExpressionNodeSolverFactory>();
 
-var solver = solverFactory.GetExpressionSolver(new VariableExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income), null));
-bool couldBeSolved = solverFactory.TrySolve(new VariableExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income), null), out decimal result);
+var grossIncomeExpression = new ConstantExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.GrossIncome), 1000);
+var taxExpression = new ConstantExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Tax), 1 - 0.3m);
 
-Console.WriteLine(solver);
-Console.WriteLine(couldBeSolved);
+
+
+var incomeExpression = new BinomialExpression(
+	new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income),
+	grossIncomeExpression,
+	Application.Operators.BinomialOperatorEnum.Multiplication,
+	taxExpression);
+
+bool couldBeSolved = solverFactory.TrySolve(incomeExpression, out decimal result);
+
+Console.WriteLine($"{couldBeSolved}- {result}");
 
 
