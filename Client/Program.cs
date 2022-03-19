@@ -6,24 +6,25 @@ using Castle.Windsor;
 WindsorContainer container = new WindsorContainer();
 
 container.Register(
-	Component.For<IExpressionNodeSolver<BinomialExpression>>()
+	Component.For<IExpressionNodeSolverForMarker<BinomialExpression>>()
 	.ImplementedBy<BinomialExpressionSolver>()
 	.LifestyleTransient());
 
 container.Register(
-	Component.For<IExpressionNodeSolver<VariableExpression>>()
+	Component.For<IExpressionNodeSolverForMarker<VariableExpression>>()
 	.ImplementedBy<VariableExpressionSolver>()
 	.LifestyleTransient());
 
 container.Register(
-	Component.For<ExpressionSolverFactory>()
-	.Instance(new ExpressionSolverFactory(container))
+	Component.For<ExpressionNodeSolverFactory>()
+	.Instance(new ExpressionNodeSolverFactory(container))
 	.LifestyleSingleton());
-var solverFactory = container.Resolve<ExpressionSolverFactory>();
+var solverFactory = container.Resolve<ExpressionNodeSolverFactory>();
 
-bool couldBeSolved = solverFactory.TrySolve(
-     new VariableExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income), null), out decimal result);
+var solver = solverFactory.GetExpressionSolver(new VariableExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income), null));
+bool couldBeSolved = solverFactory.TrySolve(new VariableExpression(new CalculationVariableExpressionKey("Risk", CalculationVariablesEnum.Income), null), out decimal result);
 
+Console.WriteLine(solver);
 Console.WriteLine(couldBeSolved);
 
 

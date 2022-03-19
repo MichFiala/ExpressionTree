@@ -6,20 +6,21 @@ using TreeStructure;
 
 namespace Application
 {
-	public class VariableExpressionSolver : IExpressionNodeSolver<VariableExpression>
+	public class VariableExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<VariableExpression>
 	{
-		private readonly ExpressionSolverFactory _solverFactory;
-		public VariableExpressionSolver(ExpressionSolverFactory solverFactory)
+		private readonly ExpressionNodeSolverFactory _solverFactory;
+		public VariableExpressionSolver(ExpressionNodeSolverFactory solverFactory)
 		{
 			_solverFactory = solverFactory;
 		}
-		public bool TrySolve(VariableExpression node, out decimal result)
+		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
 		{
+			var node = (VariableExpression)expressionNode;
 			result = 0;
 
 			if (node.Expression is null) return false;
 
-			return _solverFactory.TrySolve(node.Expression, out result);
+			return _solverFactory.GetExpressionSolver(expressionNode).TrySolve(node.Expression, out result);
 		}
 	}
 }

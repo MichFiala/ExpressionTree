@@ -2,19 +2,20 @@ using TreeStructure;
 
 namespace Application
 {
-	public class BinomialExpressionSolver : IExpressionNodeSolver<BinomialExpression>
+	public class BinomialExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<BinomialExpression>
 	{
-		private readonly ExpressionSolverFactory _solverFactory;
-		public BinomialExpressionSolver(ExpressionSolverFactory solverFactory)
+		private readonly ExpressionNodeSolverFactory _solverFactory;
+		public BinomialExpressionSolver(ExpressionNodeSolverFactory solverFactory)
 		{
 			_solverFactory = solverFactory;
 		}
-		public bool TrySolve(BinomialExpression node, out decimal result)
+		public bool TrySolve(IExpressionNode binomialNode, out decimal result)
 		{
+			var node = (BinomialExpression)binomialNode;
 			result = 0;
 
-			var leftSideCouldBeSolved = _solverFactory.TrySolve(node.LeftSide, out decimal leftSideResult);
-			var rightSideCouldBeSolved = _solverFactory.TrySolve(node.RightSide, out decimal rightSideResult);
+			var leftSideCouldBeSolved = _solverFactory.GetExpressionSolver(node.LeftSide).TrySolve(node.LeftSide, out decimal leftSideResult);
+			var rightSideCouldBeSolved = _solverFactory.GetExpressionSolver(node.LeftSide).TrySolve(node.RightSide, out decimal rightSideResult);
 
 			if (!leftSideCouldBeSolved || !rightSideCouldBeSolved) return false;
 

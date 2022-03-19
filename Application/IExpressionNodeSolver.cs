@@ -2,8 +2,8 @@ using TreeStructure;
 
 namespace Application
 {
-	public interface IExpressionNodeSolver<T> where T: AbstractExpressionNode
+	public interface IExpressionNodeSolver
 	{
-		bool TrySolve(T node, out decimal result);
+		bool TrySolve(IExpressionNode node, out decimal result);
 	}
 }
