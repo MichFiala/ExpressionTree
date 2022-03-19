@@ -5,7 +5,7 @@ namespace Application.Expressions
 {
 	public class BinomialExpression : AbstractExpressionNode
 	{
-		public BinomialExpression(IExpressionNodeKey key, AbstractExpressionNode leftSide, BinomialOperatorEnum operatorEnum, AbstractExpressionNode rightSide) : base(key)
+		public BinomialExpression(IExpressionNodeKey key, IExpressionNode leftSide, BinomialOperatorEnum operatorEnum, IExpressionNode rightSide) : base(key)
 		{
 			LeftSide = leftSide;
 			Operator = operatorEnum;
