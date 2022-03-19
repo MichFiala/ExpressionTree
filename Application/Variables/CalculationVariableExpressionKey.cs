@@ -1,6 +1,6 @@
 using TreeStructure;
 
-namespace Application
+namespace Application.Variables
 {
 	public class CalculationVariableExpressionKey : IExpressionNodeKey
 	{

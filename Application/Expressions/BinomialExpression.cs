@@ -1,8 +1,9 @@
+using Application.Operators;
 using TreeStructure;
 
-namespace Application
+namespace Application.Expressions
 {
-	public class BinomialExpression : AbstractExpressionNode, IExpressionNode
+	public class BinomialExpression : AbstractExpressionNode
 	{
 		public BinomialExpression(IExpressionNodeKey key, AbstractExpressionNode leftSide, BinomialOperatorEnum operatorEnum, AbstractExpressionNode rightSide) : base(key)
 		{
@@ -10,10 +11,10 @@ namespace Application
 			Operator = operatorEnum;
 			RightSide = rightSide;
 		}
-		public AbstractExpressionNode LeftSide { get; }
+		public IExpressionNode LeftSide { get; }
 
 		public BinomialOperatorEnum Operator { get; }
 
-		public AbstractExpressionNode RightSide { get; }
+		public IExpressionNode RightSide { get; }
 	}
 }

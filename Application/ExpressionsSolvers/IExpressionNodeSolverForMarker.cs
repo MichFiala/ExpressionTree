@@ -1,6 +1,6 @@
 using TreeStructure;
 
-namespace Application
+namespace Application.ExpressionsSolvers
 {
 	public interface IExpressionNodeSolverForMarker<T> where T: IExpressionNode{}
 }

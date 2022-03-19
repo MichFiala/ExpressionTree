@@ -1,6 +1,8 @@
+using Application.Expressions;
+using Application.Operators;
 using TreeStructure;
 
-namespace Application
+namespace Application.ExpressionsSolvers
 {
 	public class BinomialExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<BinomialExpression>
 	{

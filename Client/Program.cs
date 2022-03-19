@@ -1,5 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Application;
+using Application.Expressions;
+using Application.ExpressionsSolvers;
+using Application.Variables;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 

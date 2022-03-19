@@ -1,4 +1,4 @@
-namespace Application
+namespace Application.Variables
 {
     public enum CalculationVariablesEnum
     {

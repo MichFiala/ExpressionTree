@@ -1,6 +1,6 @@
 using TreeStructure;
 
-namespace Application
+namespace Application.Expressions
 {
 	public abstract class AbstractExpressionNode : IExpressionNode
 	{
