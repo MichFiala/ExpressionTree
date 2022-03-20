@@ -1,8 +1,9 @@
+using Application.Variables;
 using TreeStructure;
 
-namespace Application.Variables
+namespace Application.Keys
 {
-	public class CalculationVariableExpressionKey : IExpressionNodeKey
+	public class CalculationVariableExpressionKey : IExpressionRootKey
 	{
 		private readonly string _logicalStructure;
 		private readonly CalculationVariablesEnum _variable;
@@ -12,6 +13,7 @@ namespace Application.Variables
 			_logicalStructure = logicalStructure;
 
 		}
-		public string GetKey() => $"{_logicalStructure}-{_variable}";
+
+		public string Key => $"{_logicalStructure}-{_variable}";
 	}
 }

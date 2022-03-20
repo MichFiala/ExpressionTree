@@ -23,6 +23,8 @@ namespace Application
 				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<VariableExpression>>();
 			if (type == typeof(ConstantExpression))
 				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<ConstantExpression>>();
+			if (type == typeof(ExpressionRoot))
+				return (IExpressionNodeSolver)_container.Resolve<IExpressionNodeSolverForMarker<ExpressionRoot>>();				
 
 			throw new InvalidDataException($"Cannot find solver for type {node.GetType()}");
 		}
