@@ -6,7 +6,6 @@ namespace Application.Expressions
     {
         public string Name { get; }
         public abstract IEnumerable<IExpressionNode>? Children { get; }
-
         public AbstractExpressionNode(string name)
 		{
             Name = name;

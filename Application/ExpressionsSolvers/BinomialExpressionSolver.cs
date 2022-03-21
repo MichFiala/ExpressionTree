@@ -1,6 +1,5 @@
 using Application.Expressions;
 using Application.Operators;
-using Application.Stores;
 using TreeStructure;
 
 namespace Application.ExpressionsSolvers
