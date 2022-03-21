@@ -1,16 +1,32 @@
 using Application.Expressions;
+using Application.Stores;
 using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-	public class RootExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<ExpressionRoot>
+	public class RootExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<RootExpression>
 	{
 		private readonly ExpressionNodeSolverFactory _solverFactory;
-		public RootExpressionSolver(ExpressionNodeSolverFactory solverFactory)
+          private readonly IValuesStore _valuesStore;
+		public RootExpressionSolver(ExpressionNodeSolverFactory solverFactory, IValuesStore valuesStore)
 		{
+               _valuesStore = valuesStore;
 			_solverFactory = solverFactory;
 
 		}
-		public bool TrySolve(IExpressionNode node, out ReferenceExpression[] missingReferences, out decimal result) => _solverFactory.TrySolve(((ExpressionRoot)node).Node, out missingReferences, out result);
+		public bool TrySolve(IExpressionNode rootNode, out decimal result) 
+		{
+			var node = (RootExpression)rootNode;
+
+			var couldBeSolved = _solverFactory.TrySolve(((RootExpression)node).Node, out result);
+
+			if(!couldBeSolved) return false;
+
+			_valuesStore.AddValue(node.Key, result);
+
+			return true;
+		}
+
+		
 	}
 }

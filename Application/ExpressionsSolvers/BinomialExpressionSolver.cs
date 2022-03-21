@@ -1,5 +1,6 @@
 using Application.Expressions;
 using Application.Operators;
+using Application.Stores;
 using TreeStructure;
 
 namespace Application.ExpressionsSolvers
@@ -11,7 +12,7 @@ namespace Application.ExpressionsSolvers
 		{
 			_solverFactory = solverFactory;
 		}
-		public bool TrySolve(IExpressionNode binomialNode, out ReferenceExpression[] missingReferences, out decimal result)
+		public bool TrySolve(IExpressionNode binomialNode, out decimal result)
 		{
 			var node = (BinomialExpression)binomialNode;
 			result = 0;

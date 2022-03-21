@@ -9,11 +9,11 @@ namespace Application.Expressions
     /// </summary>
     public class ReferenceExpression : AbstractExpressionNode
     {
-        public IExpressionRootKey ReferenceKey { get; }
+        public IRootExpressionKey ReferenceKey { get; }
 
         public override IEnumerable<IExpressionNode>? Children => null;
 
-        public ReferenceExpression(string name, IExpressionRootKey referenceKey) : base(name)
+        public ReferenceExpression(string name, IRootExpressionKey referenceKey) : base(name)
         {
             ReferenceKey = referenceKey;
         }
