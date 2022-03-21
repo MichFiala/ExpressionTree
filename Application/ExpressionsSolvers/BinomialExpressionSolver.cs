@@ -11,7 +11,7 @@ namespace Application.ExpressionsSolvers
 		{
 			_solverFactory = solverFactory;
 		}
-		public bool TrySolve(IExpressionNode binomialNode, out decimal result)
+		public bool TrySolve(IExpressionNode binomialNode, out ReferenceExpression[] missingReferences, out decimal result)
 		{
 			var node = (BinomialExpression)binomialNode;
 			result = 0;

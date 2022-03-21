@@ -11,6 +11,6 @@ namespace Application.ExpressionsSolvers
 			_solverFactory = solverFactory;
 
 		}
-		public bool TrySolve(IExpressionNode node, out decimal result) => _solverFactory.TrySolve(((ExpressionRoot)node).Node, out result);
+		public bool TrySolve(IExpressionNode node, out ReferenceExpression[] missingReferences, out decimal result) => _solverFactory.TrySolve(((ExpressionRoot)node).Node, out missingReferences, out result);
 	}
 }

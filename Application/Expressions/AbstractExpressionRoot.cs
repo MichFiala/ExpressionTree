@@ -2,13 +2,15 @@ using TreeStructure;
 
 namespace Application.Expressions
 {
-	public class AbstractExpressionRoot : IExpressionRoot
-	{
-		public IExpressionRootKey Key { get; }
-
-		public AbstractExpressionRoot(IExpressionRootKey key)
-		{
-			this.Key = key;
-		}
-	}
+    public abstract class AbstractExpressionRoot : IExpressionRoot
+    {
+        public IExpressionRootKey Key { get; }
+        public string Name { get; }
+        public abstract IEnumerable<IExpressionNode>? Children { get; }
+        public AbstractExpressionRoot(IExpressionRootKey key, string name)
+        {
+            Key = key;
+            Name = name;
+        }
+    }
 }
