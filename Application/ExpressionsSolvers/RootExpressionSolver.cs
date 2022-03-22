@@ -4,29 +4,30 @@ using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-	public class RootExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<RootExpression>
+	public class RootExpressionSolver : IExpressionNodeSolver
 	{
-		private readonly ExpressionNodeSolverFactory _solverFactory;
-          private readonly IValuesStore _valuesStore;
-		public RootExpressionSolver(ExpressionNodeSolverFactory solverFactory, IValuesStore valuesStore)
+		private readonly IValuesStore _valuesStore;
+		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
+		public RootExpressionSolver(IValuesStore valuesStore)
 		{
-               _valuesStore = valuesStore;
-			_solverFactory = solverFactory;
-
+			_valuesStore = valuesStore;
 		}
-		public bool TrySolve(IExpressionNode rootNode, out decimal result) 
+		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
 		{
-			var node = (RootExpression)rootNode;
+			result = 0;
+			var node = expressionNode as RootExpression;
 
-			var couldBeSolved = _solverFactory.TrySolve(((RootExpression)node).Node, out result);
+			if (node is null) return false;
 
-			if(!couldBeSolved) return false;
+			var couldBeSolved = SolverFacade.TrySolve(((RootExpression)node).Node, out result);
+
+			if (!couldBeSolved) return false;
 
 			_valuesStore.AddValue(node.Key, result);
 
 			return true;
 		}
 
-		
+
 	}
 }

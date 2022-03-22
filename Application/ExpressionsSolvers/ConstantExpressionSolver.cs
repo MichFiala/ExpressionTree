@@ -3,11 +3,17 @@ using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-    public class ConstantExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<ConstantExpression>
+    public class ConstantExpressionSolver : IExpressionNodeSolver
     {
-        public bool TrySolve(IExpressionNode expressionNode, out decimal result)
+		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
+		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
         {
-            result = ((ConstantExpression)expressionNode).Value;
+			result = 0;
+			var node = expressionNode as ConstantExpression;
+
+			if(node is null) return false;
+
+            result = node.Value;
 
             return true;
         }

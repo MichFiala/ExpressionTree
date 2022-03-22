@@ -4,20 +4,20 @@ using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-	public class BinomialExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<BinomialExpression>
+	public class BinomialExpressionSolver : IExpressionNodeSolver
 	{
-		private readonly ExpressionNodeSolverFactory _solverFactory;
-		public BinomialExpressionSolver(ExpressionNodeSolverFactory solverFactory)
+		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
+		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
 		{
-			_solverFactory = solverFactory;
-		}
-		public bool TrySolve(IExpressionNode binomialNode, out decimal result)
-		{
-			var node = (BinomialExpression)binomialNode;
-			result = 0;
+			if(SolverFacade is null) throw new NullReferenceException("Solver Facade is null");
 
-			var leftSideCouldBeSolved = _solverFactory.TrySolve(node.LeftSide, out decimal leftSideResult);
-			var rightSideCouldBeSolved = _solverFactory.TrySolve(node.RightSide, out decimal rightSideResult);
+			result = 0;
+			var node = expressionNode as BinomialExpression;
+
+			if(node is null) return false;
+
+			var leftSideCouldBeSolved = SolverFacade.TrySolve(node.LeftSide, out decimal leftSideResult);
+			var rightSideCouldBeSolved = SolverFacade.TrySolve(node.RightSide, out decimal rightSideResult);
 
 			if (!leftSideCouldBeSolved || !rightSideCouldBeSolved) return false;
 

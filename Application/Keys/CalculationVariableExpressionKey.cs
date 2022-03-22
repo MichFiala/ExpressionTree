@@ -3,7 +3,7 @@ using TreeStructure;
 
 namespace Application.Keys
 {
-	public class CalculationVariableExpressionKey : IRootExpressionKey
+	public class CalculationVariableExpressionKey : IExpressionRootKey
 	{
 		private readonly string _logicalStructure;
 		private readonly CalculationVariablesEnum _variable;

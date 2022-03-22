@@ -1,6 +1,6 @@
 namespace TreeStructure
 {
-	public interface IRootExpressionKey
+	public interface IExpressionRootKey
     {
         public string Key { get; }
     }

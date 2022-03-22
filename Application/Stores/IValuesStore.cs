@@ -4,7 +4,8 @@ namespace Application.Stores
 {
 	public interface IValuesStore
 	{
-		public bool TryGetValue(IRootExpressionKey key, out decimal value);
-		public void AddValue(IRootExpressionKey key, decimal value);
+		public bool TryGetValue(IExpressionRootKey key, out decimal value);
+		public void AddValue(IExpressionRootKey key, decimal value);
+		public void Clear();
 	}
 }

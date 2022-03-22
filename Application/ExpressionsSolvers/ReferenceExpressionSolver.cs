@@ -4,17 +4,23 @@ using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-	public class ReferenceExpressionSolver : IExpressionNodeSolver, IExpressionNodeSolverForMarker<ReferenceExpression>
+	public class ReferenceExpressionSolver : IExpressionNodeSolver
 	{
-		private readonly ExpressionNodeSolverFactory _solverFactory;
+		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
 		private readonly IValuesStore _valuesStore;
-		public ReferenceExpressionSolver(ExpressionNodeSolverFactory solverFactory, IValuesStore valuesStore)
+		public ReferenceExpressionSolver(IValuesStore valuesStore)
 		{
 			_valuesStore = valuesStore;
-			_solverFactory = solverFactory;
 		}
-		public bool TrySolve(IExpressionNode expressionNode, out decimal result) =>
-			_valuesStore.TryGetValue(((ReferenceExpression)expressionNode).ReferenceKey, out result);
-		
+		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
+		{
+			result = 0;
+			var node = expressionNode as ReferenceExpression;
+
+			if (node is null) return false;
+
+			return _valuesStore.TryGetValue(node.ReferenceKey, out result);
+		}
+
 	}
 }
