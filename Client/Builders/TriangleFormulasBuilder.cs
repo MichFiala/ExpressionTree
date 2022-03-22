@@ -32,7 +32,7 @@ namespace Application.Builders
 
 			var rootKey = new TrianglePeripheryVariablesKey(TriangleAttributes.PeripheryAttributesSegment, TrianglePeripheryVariables.Periphery);
 			var rootExpression = new RootExpression(rootKey, expression);
-
+			// TODO replace for simplifier
 			var solved = _solverFacade.TrySolve(rootExpression, out decimal result);
 
 			return solved ? new RootExpression(rootKey, new ConstantExpression(result)) : rootExpression;
@@ -56,7 +56,7 @@ namespace Application.Builders
 
 			var rootKey = new TriangleAreaVariablesKey(TriangleAttributes.AreaAttributesSegment, TriangleAreaVariables.Area);
 			var rootExpression = new RootExpression(rootKey, expression);
-
+			// TODO replace by simplifier
 			var solved = _solverFacade.TrySolve(rootExpression, out decimal result);
 
 			return solved ? new RootExpression(rootKey, new ConstantExpression(result)) : rootExpression;

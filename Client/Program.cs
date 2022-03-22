@@ -9,7 +9,7 @@ var initValues = new (IExpressionRootKey, decimal)[]
 	(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideALength), 2),
 	(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideBLength), 4),
 	(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.HeightALength), 6),
-	// (new TriangleSideVariablesKey(TriangleAttributes.Length, TriangleSideVariables.SideCLength), 8),
+	(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideCLength), 8),
 };
 
 var formulasBuilder = new TriangleFormulasBuilder(initValues);

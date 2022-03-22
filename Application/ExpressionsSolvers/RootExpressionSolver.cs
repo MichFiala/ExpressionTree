@@ -18,6 +18,8 @@ namespace Application.ExpressionsSolvers
 			var node = expressionNode as RootExpression;
 
 			if (node is null) return false;
+			// If value is already in store use it
+			if(_valuesStore.TryGetValue(node.Key, out result)) return true;
 
 			var couldBeSolved = SolverFacade.TrySolve(((RootExpression)node).Node, out result);
 
