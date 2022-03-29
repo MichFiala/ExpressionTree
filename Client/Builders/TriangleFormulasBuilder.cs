@@ -13,7 +13,7 @@ namespace Application.Builders
 		public TriangleFormulasBuilder((IExpressionRootKey Key, decimal Value)[]? initValues)
 		{
 			var valuesStore = ValuesStoreFactory.GetValuesStore();
-			AbstractExpressionSolverFactory solverFactory = new ExpressionSolverFactory(valuesStore);
+			var solverFactory = new ExpressionSolverFactory(valuesStore);
 
 			if (initValues is not null)
 				foreach (var (key, value) in initValues) valuesStore.AddValue(key, value);

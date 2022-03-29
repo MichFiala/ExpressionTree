@@ -29,9 +29,5 @@ namespace Application.ExpressionsSolvers
 
             return true;
         }
-        public IExpressionNode TrySimplify(IExpressionNode node)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -21,11 +21,5 @@ namespace Application.ExpressionsSolvers
 
 			return _valuesStore.TryGetValue(node.ReferenceKey, out result);
 		}
-        public IExpressionNode TrySimplify(IExpressionNode node)
-        {
-            if(TrySolve(node, out decimal result)) return new ConstantExpression(result);
-
-			return node;
-        }
     }
 }

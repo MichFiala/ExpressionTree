@@ -15,15 +15,6 @@ namespace Application.ExpressionsSolvers
 
         public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(BinomialExpression);
 
-        public IExpressionNode TrySimplify(IExpressionNode node)
-        {
-            if (TrySolve(node, out decimal result))
-            {
-                return new ConstantExpression(result);
-            }
-            return node;
-        }
-
         public bool TrySolve(IExpressionNode expressionNode, out decimal result)
         {
             result = 0;

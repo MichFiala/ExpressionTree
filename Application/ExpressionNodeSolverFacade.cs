@@ -7,7 +7,7 @@ namespace Application
     public class ExpressionNodeSolverFacade
     {
         private readonly IExpressionNodeSolver[] _availableSolvers;
-        public ExpressionNodeSolverFacade(AbstractExpressionSolverFactory solverFactory)
+        public ExpressionNodeSolverFacade(ExpressionSolverFactory solverFactory)
         {
             _availableSolvers = solverFactory.CreateSolvers(this);
 

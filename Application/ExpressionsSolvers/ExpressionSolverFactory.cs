@@ -2,7 +2,7 @@ using Application.Stores;
 
 namespace Application.ExpressionsSolvers
 {
-    public class ExpressionSolverFactory : AbstractExpressionSolverFactory
+    public class ExpressionSolverFactory
     {
         private readonly IValuesStore _valuesStore;
 
@@ -10,7 +10,7 @@ namespace Application.ExpressionsSolvers
 		{
             _valuesStore = valuesStore;
         }
-        public override IExpressionNodeSolver[] CreateSolvers(ExpressionNodeSolverFacade solverFacade) =>
+        public virtual IExpressionNodeSolver[] CreateSolvers(ExpressionNodeSolverFacade solverFacade) =>
         	new IExpressionNodeSolver[]
               {
                 new ConstantExpressionSolver(),
