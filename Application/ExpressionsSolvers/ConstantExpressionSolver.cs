@@ -5,8 +5,8 @@ namespace Application.ExpressionsSolvers
 {
     public class ConstantExpressionSolver : IExpressionNodeSolver
     {
-		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
-		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
+        public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(ConstantExpression);
+        public bool TrySolve(IExpressionNode expressionNode, out decimal result)
         {
 			result = 0;
 			var node = expressionNode as ConstantExpression;

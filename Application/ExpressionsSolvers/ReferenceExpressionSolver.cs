@@ -6,12 +6,12 @@ namespace Application.ExpressionsSolvers
 {
 	public class ReferenceExpressionSolver : IExpressionNodeSolver
 	{
-		public ExpressionNodeSolverFacade SolverFacade { get; set; } = null!;
 		private readonly IValuesStore _valuesStore;
 		public ReferenceExpressionSolver(IValuesStore valuesStore)
 		{
 			_valuesStore = valuesStore;
 		}
+		public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(ReferenceExpression);
 		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
 		{
 			result = 0;
@@ -21,6 +21,11 @@ namespace Application.ExpressionsSolvers
 
 			return _valuesStore.TryGetValue(node.ReferenceKey, out result);
 		}
+        public IExpressionNode TrySimplify(IExpressionNode node)
+        {
+            if(TrySolve(node, out decimal result)) return new ConstantExpression(result);
 
-	}
+			return node;
+        }
+    }
 }

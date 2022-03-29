@@ -1,32 +1,24 @@
 using Application.ExpressionsSolvers;
+using Application.Stores;
 using TreeStructure;
 
 namespace Application
 {
-	public class ExpressionNodeSolverFacade
-	{
-          private readonly IExpressionNodeSolver[] _availableSolvers;
-		public ExpressionNodeSolverFacade(IExpressionNodeSolver[] availableSolvers)
-		{
-               _availableSolvers = availableSolvers;
+    public class ExpressionNodeSolverFacade
+    {
+        private readonly IExpressionNodeSolver[] _availableSolvers;
+        public ExpressionNodeSolverFacade(AbstractExpressionSolverFactory solverFactory)
+        {
+            _availableSolvers = solverFactory.CreateSolvers(this);
 
-			if(availableSolvers is null || !availableSolvers.Any()) throw new InvalidOperationException("No available solvers found");
+            if (_availableSolvers is null || !_availableSolvers.Any()) throw new InvalidOperationException("No available solvers found");
+        }
+        private bool TrySolveBySolvers(IExpressionNode node, out decimal result)
+        {
+            var solver = _availableSolvers.Single(s => s.CanSolve(node));
 
-			foreach(var solver in availableSolvers) solver.SolverFacade = this;
-
-			_availableSolvers = availableSolvers;
-		}
-		private bool TrySolveBySolvers(IExpressionNode node, out decimal result)
-		{
-			result = 0;
-
-			foreach(var solver in _availableSolvers)
-			{
-				if(solver.TrySolve(node, out result)) return true;
-			}
-
-			return false;
-		}
-		public bool TrySolve(IExpressionNode node, out decimal result) => TrySolveBySolvers(node, out result);
-	}
+            return solver.TrySolve(node, out result);
+        }
+        public bool TrySolve(IExpressionNode node, out decimal result) => TrySolveBySolvers(node, out result);
+    }
 }
