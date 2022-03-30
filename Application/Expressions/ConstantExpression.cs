@@ -7,10 +7,6 @@ namespace Application.Expressions
     /// </summary>
     public class ConstantExpression : IExpressionNode
     {
-        public decimal Value { get; }
-		public ConstantExpression(decimal value)
-        {
-            Value = value;
-        }
+        public decimal Value { get; init; }
     }
 }

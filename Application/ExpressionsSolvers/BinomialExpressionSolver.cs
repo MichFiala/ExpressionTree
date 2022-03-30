@@ -15,37 +15,33 @@ namespace Application.ExpressionsSolvers
 
         public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(BinomialExpression);
 
-        public bool TrySolve(IExpressionNode expressionNode, out decimal result)
-        {
-            result = 0;
+		public IExpressionNode Solve(IExpressionNode expressionNode)
+		{
             var node = expressionNode as BinomialExpression;
 
-            if (node is null) return false;
+            if (node is null) throw new InvalidOperationException($"{this.GetType().Name} cannot solve expression of type {expressionNode.GetType()}");
 
-            var leftSideCouldBeSolved =  _solverFacade.TrySolve(node.LeftSide, out decimal leftSideResult);
-            var rightSideCouldBeSolved = _solverFacade.TrySolve(node.RightSide, out decimal rightSideResult);
+            node.LeftSide =  _solverFacade.Solve(node.LeftSide);
+            node.RightSide = _solverFacade.Solve(node.RightSide);
+            // TODO check for 0 sides
+            if (node.LeftSide is not ConstantExpression || node.RightSide is not ConstantExpression) return node;
 
-            if (!leftSideCouldBeSolved || !rightSideCouldBeSolved) return false;
+			var leftSideValue = ((ConstantExpression)node.LeftSide).Value;
+            var rightSideValue = ((ConstantExpression)node.RightSide).Value;
 
-            switch (node.Operator)
+			switch (node.Operator)
             {
                 case BinomialOperatorEnum.Plus:
-                    result = leftSideResult + rightSideResult;
-                    return true;
-                case BinomialOperatorEnum.Multiplication:
-                    result = leftSideResult * rightSideResult;
-                    return true;
+					return new ConstantExpression { Value = leftSideValue + rightSideValue };
+				case BinomialOperatorEnum.Multiplication:
+                    return new ConstantExpression { Value = leftSideValue * rightSideValue };
                 case BinomialOperatorEnum.Minus:
-                    result = leftSideResult - rightSideResult;
-                    return true;
+                    return new ConstantExpression { Value = leftSideValue - rightSideValue };
                 case BinomialOperatorEnum.Division:
-                    result = leftSideResult / rightSideResult;
-                    return true;
+                    return new ConstantExpression { Value = leftSideValue / rightSideValue };
                 default:
                     throw new NotImplementedException($"Not implemented solving method for operator {node.Operator}");
             }
-
-            // TODO check for 0 sides to simplify 
-        }
+		}
     }
 }

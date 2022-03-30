@@ -6,16 +6,14 @@ namespace Application.ExpressionsSolvers
     public class ConstantExpressionSolver : IExpressionNodeSolver
     {
         public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(ConstantExpression);
-        public bool TrySolve(IExpressionNode expressionNode, out decimal result)
-        {
-			result = 0;
-			var node = expressionNode as ConstantExpression;
 
-			if(node is null) return false;
+		public IExpressionNode Solve(IExpressionNode expressionNode)
+		{
+            var node = expressionNode as ConstantExpression;
 
-            result = node.Value;
+			if (node is null) throw new InvalidOperationException($"{this.GetType().Name} cannot solve expression of type {expressionNode.GetType()}");
 
-            return true;
-        }
+			return node;
+		}
     }
 }

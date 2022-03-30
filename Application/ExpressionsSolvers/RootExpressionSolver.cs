@@ -4,30 +4,27 @@ using TreeStructure;
 
 namespace Application.ExpressionsSolvers
 {
-    public class RootExpressionSolver : IExpressionNodeSolver
-    {
-        private readonly IValuesStore _valuesStore;
-        private readonly ExpressionNodeSolverFacade _solverFacade;
-        public RootExpressionSolver(ExpressionNodeSolverFacade solverFacade, IValuesStore valuesStore)
-        {
-            _solverFacade = solverFacade;
-            _valuesStore = valuesStore;
-        }
-        public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(RootExpression);
-        public bool TrySolve(IExpressionNode expressionNode, out decimal result)
-        {
-            result = 0;
-            var node = expressionNode as RootExpression;
+	public class RootExpressionSolver : IExpressionNodeSolver
+	{
+		private readonly IValuesStore _valuesStore;
+		private readonly ExpressionNodeSolverFacade _solverFacade;
+		public RootExpressionSolver(ExpressionNodeSolverFacade solverFacade, IValuesStore valuesStore)
+		{
+			_solverFacade = solverFacade;
+			_valuesStore = valuesStore;
+		}
+		public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(RootExpression);
+		public IExpressionNode Solve(IExpressionNode expressionNode)
+		{
+			var node = expressionNode as RootExpression;
 
-            if (node is null) return false;
+			if (node is null) throw new InvalidOperationException($"{this.GetType().Name} cannot solve expression of type {expressionNode.GetType()}");
 
-            var couldBeSolved = _solverFacade.TrySolve(((RootExpression)node).Node, out result);
+			node.Node = _solverFacade.Solve(node.Node);
+            	// Should this be here of on level higher?
+			if (node.Node is ConstantExpression) _valuesStore.AddValue(node.Key, ((ConstantExpression)node.Node).Value);
 
-            if (!couldBeSolved) return false;
-
-            _valuesStore.AddValue(node.Key, result);
-
-            return true;
-        }
-    }
+			return node;
+		}
+	}
 }

@@ -12,14 +12,16 @@ namespace Application.ExpressionsSolvers
 			_valuesStore = valuesStore;
 		}
 		public bool CanSolve(IExpressionNode node) => node.GetType() == typeof(ReferenceExpression);
-		public bool TrySolve(IExpressionNode expressionNode, out decimal result)
+
+		public IExpressionNode Solve(IExpressionNode expressionNode)
 		{
-			result = 0;
 			var node = expressionNode as ReferenceExpression;
 
-			if (node is null) return false;
+			if (node is null) throw new InvalidOperationException($"{this.GetType().Name} cannot solve expression of type {expressionNode.GetType()}");
 
-			return _valuesStore.TryGetValue(node.ReferenceKey, out result);
+			var valueExists = _valuesStore.TryGetValue(node.ReferenceKey, out decimal result);
+
+			return valueExists ? new ConstantExpression { Value = result } : node;
 		}
-    }
+	}
 }
