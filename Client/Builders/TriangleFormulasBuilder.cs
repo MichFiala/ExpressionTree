@@ -13,12 +13,12 @@ namespace Application.Builders
 		public TriangleFormulasBuilder((IExpressionRootKey Key, decimal Value)[]? initValues)
 		{
 			var valuesStore = ValuesStoreFactory.GetValuesStore();
+			var solverFactory = new ExpressionSolverFactory(valuesStore);
 
 			if (initValues is not null)
 				foreach (var (key, value) in initValues) valuesStore.AddValue(key, value);
 
-			_solverFacade = new ExpressionNodeSolverFacade(
-				ExpressionSolverFactory.GetAllAvailableSolvers(valuesStore));
+			_solverFacade = new ExpressionNodeSolverFacade(solverFactory);
 		}
 
 		public IExpressionRoot BuildPeripheryFormula()

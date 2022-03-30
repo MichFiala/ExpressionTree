@@ -2,15 +2,21 @@ using Application.Stores;
 
 namespace Application.ExpressionsSolvers
 {
-	public static class ExpressionSolverFactory
-	{
-		public static IExpressionNodeSolver[] GetAllAvailableSolvers(IValuesStore valuesStore) =>
-		    new IExpressionNodeSolver[]
-			  {
-				new ConstantExpressionSolver(),
-				new BinomialExpressionSolver(),
-				new ReferenceExpressionSolver(valuesStore),
-				new RootExpressionSolver(valuesStore),
-			  };
-	}
+    public class ExpressionSolverFactory
+    {
+        private readonly IValuesStore _valuesStore;
+
+        public ExpressionSolverFactory(IValuesStore valuesStore)
+		{
+            _valuesStore = valuesStore;
+        }
+        public virtual IExpressionNodeSolver[] CreateSolvers(ExpressionNodeSolverFacade solverFacade) =>
+        	new IExpressionNodeSolver[]
+              {
+                new ConstantExpressionSolver(),
+                new BinomialExpressionSolver(solverFacade),
+                new ReferenceExpressionSolver(_valuesStore),
+                new RootExpressionSolver(solverFacade, _valuesStore),
+              };
+    }
 }
