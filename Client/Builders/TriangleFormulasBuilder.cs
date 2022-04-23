@@ -20,7 +20,7 @@ namespace Application.Builders
 			_solverFacade = new ExpressionNodeSolverFacade(solverFactory);
 		}
 
-		public IExpressionRoot BuildPeripheryFormula()
+		public IExpressionNode BuildPeripheryFormula()
 		{
 			var sideALength = new ReferenceExpression(
 				new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideALength));
@@ -37,10 +37,10 @@ namespace Application.Builders
 
 			var solvedExression = _solverFacade.Solve(rootExpression);
 
-			return (RootExpression)solvedExression;
+			return ((RootExpression)solvedExression).Node;
 		}
 
-		public IExpressionRoot BuildAreaFormula()
+		public IExpressionNode BuildAreaFormula()
 		{
 			var sideALength = new ReferenceExpression(
 				new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideALength));
@@ -61,7 +61,7 @@ namespace Application.Builders
 
 			var solvedExression = _solverFacade.Solve(rootExpression);
 
-			return (RootExpression)solvedExression;
+			return ((RootExpression)solvedExression).Node;
 		}
 	}
 }
