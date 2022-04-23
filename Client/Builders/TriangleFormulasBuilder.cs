@@ -10,9 +10,8 @@ namespace Application.Builders
 	public class TriangleFormulasBuilder
 	{
 		private readonly ExpressionNodeSolverFacade _solverFacade;
-		public TriangleFormulasBuilder((IExpressionRootKey Key, decimal Value)[]? initValues)
+		public TriangleFormulasBuilder((ExpressionRootKey Key, decimal Value)[]? initValues, IValuesStore valuesStore)
 		{
-			var valuesStore = ValuesStoreFactory.GetValuesStore();
 			var solverFactory = new ExpressionSolverFactory(valuesStore);
 
 			if (initValues is not null)
@@ -23,16 +22,19 @@ namespace Application.Builders
 
 		public IExpressionRoot BuildPeripheryFormula()
 		{
-			var sideALength = new ReferenceExpression(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideALength));
-			var sideBLength = new ReferenceExpression(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideBLength));
-			var sideCLength = new ReferenceExpression(new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideCLength));
+			var sideALength = new ReferenceExpression(
+				new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideALength));
+			var sideBLength = new ReferenceExpression(
+				new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideBLength));
+			var sideCLength = new ReferenceExpression(
+				new TriangleSideVariablesKey(TriangleAttributes.LengthAttributesSegment, TriangleSideVariables.SideCLength));
 
 			var expression = new BinomialExpression(sideALength, Operators.BinomialOperatorEnum.Plus,
 					new BinomialExpression(sideBLength, Operators.BinomialOperatorEnum.Plus, sideCLength));
 
 			var rootKey = new TrianglePeripheryVariablesKey(TriangleAttributes.PeripheryAttributesSegment, TrianglePeripheryVariables.Periphery);
 			var rootExpression = new RootExpression(rootKey, expression);
-			
+
 			var solvedExression = _solverFacade.Solve(rootExpression);
 
 			return (RootExpression)solvedExression;
@@ -50,13 +52,13 @@ namespace Application.Builders
 					sideALength,
 					Operators.BinomialOperatorEnum.Multiplication,
 					heightALength
-				), 
+				),
 				Operators.BinomialOperatorEnum.Division,
-				new ConstantExpression{Value = 2});
+				new ConstantExpression { Value = 2 });
 
 			var rootKey = new TriangleAreaVariablesKey(TriangleAttributes.AreaAttributesSegment, TriangleAreaVariables.Area);
 			var rootExpression = new RootExpression(rootKey, expression);
-			
+
 			var solvedExression = _solverFacade.Solve(rootExpression);
 
 			return (RootExpression)solvedExression;

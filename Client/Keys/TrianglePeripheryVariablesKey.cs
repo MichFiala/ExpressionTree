@@ -1,14 +1,10 @@
 using Client.Variables;
+using TreeStructure;
 
 namespace Client.Keys
 {
-	public record TrianglePeripheryVariablesKey : AbstractTriangleVariablesKey
+	public class TrianglePeripheryVariablesKey : ExpressionRootKey
 	{
-		public TrianglePeripheryVariables Variable { get; }
-		public override string Key => $"{Attribute}-{Variable}";
-		public TrianglePeripheryVariablesKey(TriangleAttributes attribute, TrianglePeripheryVariables variable): base(attribute)
-		{
-			Variable = variable;
-		}
+		public TrianglePeripheryVariablesKey(TriangleAttributes attribute, TrianglePeripheryVariables variable): base(attribute, variable){}
 	}
 }

@@ -2,6 +2,8 @@ namespace TreeStructure
 {
 	public interface IExpressionRoot : IExpressionNode
     {
-        public IExpressionRootKey Key { get; }
+        public ExpressionRootKey Key { get; }
+
+        public IExpressionNode Node { get; set; }
 	}
 }

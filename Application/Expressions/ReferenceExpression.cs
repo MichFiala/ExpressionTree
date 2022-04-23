@@ -7,8 +7,8 @@ namespace Application.Expressions
     /// </summary>
     public class ReferenceExpression : IExpressionNode
     {
-        public IExpressionRootKey ReferenceKey { get; }
-        public ReferenceExpression(IExpressionRootKey referenceKey)
+        public ExpressionRootKey ReferenceKey { get; }
+        public ReferenceExpression(ExpressionRootKey referenceKey)
         {
             ReferenceKey = referenceKey;
         }
