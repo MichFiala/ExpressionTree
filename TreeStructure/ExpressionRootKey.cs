@@ -43,7 +43,7 @@ namespace TreeStructure
 		public override bool Equals(object? obj) => Equals(obj as ExpressionRootKey);
 
 		public bool Equals(ExpressionRootKey? rootKey) => rootKey is not null && string.Equals(rootKey.key, key);
-		public bool Contains(object keyPart) => keyParts.Any(x => string.Equals(x, KeyPartToString(keyPart)));
+		public bool Contains(object keyPart) => keyParts.Contains(KeyPartToString(keyPart));
 
 		public override string ToString() => key;
 		/// <summary>
